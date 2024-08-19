@@ -1,5 +1,5 @@
 # Read-Audio
-A simple website to read an audio file URL from the query string.
+A simple website to read an audio file URL from the query string
 
 ## Usage
 Go to
