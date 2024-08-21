@@ -1,13 +1,68 @@
 <html>
+  <head>
+    <style>
+      /* Loader CSS */
+      #loader {
+        display: none;
+        border: 8px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 8px solid #3498db;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+
+      /* Initially hide the audio player */
+      #audioPlayer {
+        display: none;
+      }
+    </style>
+  </head>
   <body>
-    <audio controls>
+    <div id="loader"></div>
+    <audio id="audioPlayer" controls>
       <source id="source" />
       Your browser does not support the audio element.
     </audio>
 
     <script>
       const audioUrl = new URL(location).searchParams.get("p");
-      document.getElementById("source").src = audioUrl;
+      const sourceElement = document.getElementById("source");
+      const audioPlayer = document.getElementById("audioPlayer");
+      const loader = document.getElementById("loader");
+
+      // Set the audio source
+      sourceElement.src = audioUrl;
+
+      // Show the loader and hide the audio player when the audio starts loading
+      audioPlayer.addEventListener('loadstart', function() {
+        loader.style.display = 'block';
+        audioPlayer.style.display = 'none';
+      });
+
+      // Hide the loader and show the audio player when the audio is ready to play
+      audioPlayer.addEventListener('canplay', function() {
+        loader.style.display = 'none';
+        audioPlayer.style.display = 'block';
+      });
+
+      // Hide the loader if there's an error loading the audio
+      audioPlayer.addEventListener('error', function() {
+        loader.style.display = 'none';
+        audioPlayer.style.display = 'block'; // Or you could handle the error differently
+      });
+
+      // Load the audio
+      audioPlayer.load();
     </script>
   </body>
 </html>
