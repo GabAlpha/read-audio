@@ -18,7 +18,11 @@
         100% { transform: translate(-50%, -50%) rotate(360deg); }
       }
 
-      /* Initially hide the audio player */
+      /* Centering audio player */
       #audioPlayer {
         display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
