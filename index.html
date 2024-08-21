@@ -1,13 +1,43 @@
 <html>
+  <head>
+    <link rel="stylesheet" href="./styles.css" >
+  </head>
   <body>
-    <audio controls>
+    <div id="loader"></div>
+    <audio id="audioPlayer" controls>
       <source id="source" />
       Your browser does not support the audio element.
     </audio>
 
     <script>
       const audioUrl = new URL(location).searchParams.get("p");
-      document.getElementById("source").src = audioUrl;
+      const sourceElement = document.getElementById("source");
+      const audioPlayer = document.getElementById("audioPlayer");
+      const loader = document.getElementById("loader");
+
+      // Set the audio source
+      sourceElement.src = audioUrl;
+
+      // Show the loader and hide the audio player when the audio starts loading
+      audioPlayer.addEventListener('loadstart', function() {
+        loader.style.display = 'block';
+        audioPlayer.style.display = 'none';
+      });
+
+      // Hide the loader and show the audio player when the audio is ready to play
+      audioPlayer.addEventListener('canplay', function() {
+        loader.style.display = 'none';
+        audioPlayer.style.display = 'block';
+      });
+
+      // Hide the loader if there's an error loading the audio
+      audioPlayer.addEventListener('error', function() {
+        loader.style.display = 'none';
+        audioPlayer.style.display = 'block'; // Or you could handle the error differently
+      });
+
+      // Load the audio
+      audioPlayer.load();
     </script>
   </body>
 </html>
